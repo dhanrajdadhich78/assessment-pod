@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MKraft Capability Solutions LLP.</title>
+    <!-- Include the Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"
+    />
+
+    <!-- Favicon (Apple Style) -->
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="{{ url_for('static', filename='volt/assets/img/favicon/apple-touch-icon.png') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ url_for('static', filename='volt/assets/img/favicon/favicon-32x32.png') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{ url_for('static', filename='volt/assets/img/favicon/favicon-16x16.png') }}"
+    />
+    <link
+      rel="manifest"
+      href="{{ url_for('static', filename='volt/assets/img/favicon/site.webmanifest') }}"
+    />
+
+    <!-- Volt CSS (Custom styling) -->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='volt/css/volt.css') }}"
+    />
+
+    <!-- Sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Lottie JS for animations -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <!-- Navbar (Apple-style centered brand) -->
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-light shadow-sm">
+      <div class="container">
+        <a class="navbar-brand mx-auto" href="/professor_index">
+          <lottie-player
+            src="https://assets1.lottiefiles.com/packages/lf20_wEt2nn.json"
+            background="transparent"
+            speed="1"
+            style="width: 75px; height: 50px;"
+            loop
+            autoplay
+          ></lottie-player>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Sidebar (Apple-inspired, minimalist) -->
+    <nav
+      id="sidebarMenu"
+      class="sidebar d-md-block bg-light text-dark flex-md-column flex-row collapse shadow-lg"
+      data-simplebar
+    >
+      <div class="sidebar-inner p-3">
+        <!-- User Card -->
+        <div class="user-card d-flex d-md-none align-items-center justify-content-between pb-4">
+          <div class="d-flex align-items-center">
+            <div class="user-avatar lg-avatar me-4">
+              <img
+                src="{{ url_for('static', filename='user-profile.png') }}"
+                class="card-img-top rounded-circle border-white"
+                alt="User Avatar"
+              />
+            </div>
+            <div class="d-block">
+              <h2 class="h6 text-dark">{{session.name}}</h2>
+              <a
+                href="#"
+                onclick="return funLogout()"
+                class="btn btn-light text-dark btn-xs"
+              >
+                <span class="me-2"><span class="fas fa-sign-out-alt"></span></span>Logout
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Links -->
+        <ul class="nav flex-column pt-3 pt-md-0">
+          <li class="nav-item">
+            <a href="/create-test" class="nav-link">
+              <span class="sidebar-icon"><span class="fas fa-plus"></span></span>
+              <span class="sidebar-text">Create Exam</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/generate_test" class="nav-link">
+              <span class="sidebar-icon"><span class="fas fa-magic"></span></span>
+              <span class="sidebar-text">Generate Questions</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/viewquestions" class="nav-link">
+              <span class="sidebar-icon"><span class="fas fa-eye"></span></span>
+              <span class="sidebar-text">View Questions</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/updatetidlist" class="nav-link">
+              <span class="sidebar-icon"><span class="fas fa-edit"></span></span>
+              <span class="sidebar-text">Update Questions</span>
+            </a>
+          </li>
+
+          <!-- Divider -->
+          <li role="separator" class="dropdown-divider my-4"></li>
+
+          <li class="nav-item">
+            <a href="/report_professor" class="nav-link">
+              <span class="sidebar-icon"><span class="fas fa-bug"></span></span>
+              <span class="sidebar-text">Report Problems</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/payment" class="nav-link">
+              <span class="sidebar-icon"><span class="fas fa-money-bill-alt"></span></span>
+              <span class="sidebar-text">Payment</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/changepassword_professor" class="nav-link">
+              <span class="sidebar-icon"><span class="fas fa-key"></span></span>
+              <span class="sidebar-text">Change Password</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" onclick="return funLogout()" class="btn btn-danger d-flex align-items-center justify-content-center">
+              <span class="sidebar-icon"><span class="fas fa-sign-out-alt"></span></span><span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content">
+      <div class="container mt-5 pt-5">
+        {% block body %}{% endblock %}
+      </div>
+    </main>
+
+    <!-- Footer (Apple style with subtle gradient) -->
+    <footer id="sticky-footer" class="py-4 bg-light">
+      <div class="d-flex justify-content-center align-items-center" role="contentinfo">
+        <p class="font-weight-bold mb-0">Copyright © MKraft Capability Solutions LLP. <span class="current-year"><script>document.write(new Date().getFullYear())</script></span>. All rights reserved.</p>
+      </div>
+      <br>
+      <div class="d-flex justify-content-center align-items-center" role="contentinfo">
+        <p class="font-weight-bold font-small mb-0"><a href="https://www.narenderkeswani.com/">Made with ❤️ By Narender Keswani</a></p>
+      </div>
+    </footer>
+  </body>
+
+  <script>
+    // Function for handling user logout
+    function funLogout() {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you really want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Logout me!',
+        cancelButtonText: 'No!',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#202124',
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            type: 'POST',
+            url: '/logout',
+            success: function (response) {
+              if (response === 'success') {
+                window.location.href = '/';
+              } else {
+                Swal.fire('Error', 'Something went wrong. Try again later.', 'error');
+              }
+            },
+            error: function (xhr, status, error) {
+              Swal.fire('Error', 'Something went wrong. Please try again.', 'error');
+            }
+          });
+        } else {
+          Swal.fire('Cancelled', 'Logout cancelled.', 'error');
+        }
+      });
+    }
+  
+    // Function to handle the submission of a new exam (Create Exam)
+    function submitCreateExamForm() {
+      const formData = new FormData(document.getElementById('create-exam-form'));
+      
+      // Perform AJAX request to submit form data
+      $.ajax({
+        url: '/create-test',  // Replace with actual endpoint
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+          // Show success message
+          Swal.fire('Success', 'Exam created successfully!', 'success')
+            .then(() => window.location.reload());
+        },
+        error: function(xhr, status, error) {
+          Swal.fire('Error', 'Failed to create exam. Please try again.', 'error');
+        }
+      });
+    }
+  
+    // Function to handle the submission of generated questions (Generate Questions)
+    function submitGenerateQuestionsForm() {
+      const formData = new FormData(document.getElementById('generate-questions-form'));
+      
+      // Perform AJAX request to submit form data
+      $.ajax({
+        url: '/generate-questions',  // Replace with actual endpoint
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+          Swal.fire('Success', 'Questions generated successfully!', 'success')
+            .then(() => window.location.reload());
+        },
+        error: function(xhr, status, error) {
+          Swal.fire('Error', 'Failed to generate questions. Please try again.', 'error');
+        }
+      });
+    }
+  
+    // Function to toggle the sidebar visibility (for mobile responsiveness)
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebarMenu');
+      const isCollapsed = sidebar.classList.contains('collapse');
+      
+      if (isCollapsed) {
+        sidebar.classList.remove('collapse');
+      } else {
+        sidebar.classList.add('collapse');
+      }
+    }
+  
+    // Smooth Scroll for Navigation Links (if needed)
+    $(document).ready(function () {
+      // Enable smooth scroll for anchor links
+      $('a[href^="#"]').on('click', function (e) {
+        e.preventDefault();
+        const target = this.hash;
+        $('html, body').animate({ scrollTop: $(target).offset().top - 50 }, 800);
+      });
+  
+      // Handling sidebar toggle for mobile
+      $(".navbar-toggler").on("click", toggleSidebar);
+  
+      // Form submission for Create Exam
+      $("#create-exam-form").on('submit', function (e) {
+        e.preventDefault();  // Prevent default form submission
+        submitCreateExamForm();
+      });
+  
+      // Form submission for Generate Questions
+      $("#generate-questions-form").on('submit', function (e) {
+        e.preventDefault();  // Prevent default form submission
+        submitGenerateQuestionsForm();
+      });
+    });
+  
+    // Placeholder function for generating the report (Report Issues)
+    function submitReport() {
+      const reportData = {
+        issue: document.getElementById('report-issue').value
+      };
+      
+      $.ajax({
+        type: 'POST',
+        url: '/submit-report',  // Replace with actual endpoint
+        data: JSON.stringify(reportData),
+        contentType: 'application/json',
+        success: function(response) {
+          Swal.fire('Thank you!', 'Your issue has been reported successfully.', 'success');
+        },
+        error: function(xhr, status, error) {
+          Swal.fire('Error', 'Failed to report issue. Please try again later.', 'error');
+        }
+      });
+    }
+  
+    // Placeholder function for payment processing (Payment)
+    function processPayment() {
+      // Example placeholder for integrating payment logic (e.g., redirecting to payment gateway)
+      Swal.fire('Processing', 'Redirecting to payment gateway...', 'info');
+      setTimeout(() => {
+        // Simulate successful payment
+        Swal.fire('Payment Successful', 'Your payment has been processed successfully!', 'success')
+          .then(() => window.location.reload());
+      }, 2000);
+    }
+  
+    // Function to validate password change form (for change password)
+    function validatePasswordForm() {
+      const currentPassword = document.getElementById('current-password').value;
+      const newPassword = document.getElementById('new-password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+  
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        Swal.fire('Error', 'Please fill all the fields.', 'error');
+        return false;
+      }
+  
+      if (newPassword !== confirmPassword) {
+        Swal.fire('Error', 'New password and confirm password do not match.', 'error');
+        return false;
+      }
+  
+      return true;  // Valid
+    }
+  
+    // Form submission for changing password
+    function submitChangePasswordForm() {
+      if (!validatePasswordForm()) {
+        return;
+      }
+  
+      const formData = {
+        currentPassword: document.getElementById('current-password').value,
+        newPassword: document.getElementById('new-password').value
+      };
+
+      $.ajax({
+        type: 'POST',
+        url: '/changepassword_professor',  // Replace with actual endpoint
+        data: JSON.stringify(formData),
+        contentType: 'application/json',
+        success: function(response) {
+          Swal.fire('Success', 'Password changed successfully!', 'success')
+            .then(() => window.location.reload());
+        },
+        error: function(xhr, status, error) {
+          Swal.fire('Error', 'Failed to change password. Please try again later.', 'error');
+        }
+      });
+    }
+
+  </script>
+
+  <style>
+    /* Apple Style Enhancements */
+    body {
+      background-color: #f8f8f7;
+      color: #333;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    .sidebar {
+      background-color: #f7f7f7;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar .nav-link {
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 400;
+      color: #333;
+      border-radius: 12px;
+      transition: background 0.3s;
+    }
+
+    .sidebar .nav-link:hover {
+      background-color: #e3e3e3;
+      color: #007aff;
+    }
+
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+    }
+
+    footer {
+      background-color: #f7f7f7;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #007aff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Button Styles (Rounded and soft) */
+    .btn-light {
+      background-color: #f0f0f5;
+      border-radius: 12px;
+    }
+
+    .btn-danger {
+      background-color: #ff3b30;
+      border-radius: 12px;
+    }
+  </style>
+
+  <!-- Core JS -->
+  <script src="{{ url_for('static', filename='volt/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+</html>
